@@ -57,9 +57,15 @@ public class CentipedeSegment : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle * Mathf.Rad2Deg, Vector3.forward);
     }
 
+    public GameObject headShotText;
+    public GameObject bodyShotText;
+
     public void UpdateHeadSegment()
     {
         Vector3 gridPosition = GridPosition(transform.position);
+
+        /*GameObject headShot = Instantiate(headShotText, gridPosition, Quaternion.Euler(new Vector3(Random.Range(0, 90), Random.Range(0, 90), 0)));
+        Destroy(headShot, 1f);*/
 
         _targetPosition = gridPosition;
         _targetPosition.x += _direction.x;

@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class SaveData : MonoBehaviour
 {
-    public static SaveData Instance { get; private set; }
+    public static SaveData Instance { get; private set; }    
 
-    public MainMenu menuManager;
+    [SerializeField] MainMenu menuManager;
+
+    public gameSettings GameSettings;
 
     private void Awake()
     {
@@ -18,7 +21,7 @@ public class SaveData : MonoBehaviour
         else Instance = this;        
     }
 
-    struct gameSettings
+    public struct gameSettings
     {
         public float masterVolume;
         public float musicVolume;
@@ -70,7 +73,8 @@ public class SaveData : MonoBehaviour
         //Display
         menuManager.fullscreenToggle.isOn = gs.isFullscreen;
 
-        //Name        
+        //Name                
+        menuManager.nameInputText.text = gs.playerName;
 
         //Accessability
 

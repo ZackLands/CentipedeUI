@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Random = UnityEngine.Random;
 
 public class Centipede : MonoBehaviour
@@ -83,6 +84,9 @@ public class Centipede : MonoBehaviour
         }
     }
 
+    /*public GameObject headShotText;
+    public GameObject bodyShotText;*/
+
     public void Remove(CentipedeSegment segment)
     {
         int points = segment.IsHead ? pointsHead : pointsBody;
@@ -90,14 +94,20 @@ public class Centipede : MonoBehaviour
 
         GameEvents.InvokeCentipedeHitEvent(GridPosition(segment.transform.position));
 
+       
         if (segment.Ahead != null)
         {
+            Debug.Log("headshot");
             segment.Ahead.Behind = null;
+        
         }
 
         if (segment.Behind != null)
         {
             segment.Behind.Ahead = null;
+            /*Debug.Log("bodyshot");
+            GameObject bodyShot = Instantiate(bodyShotText, gameObject.transform.position, Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), 0)));
+            Destroy(bodyShot, 1f);*/
             segment.Behind.UpdateHeadSegment();
         }
 

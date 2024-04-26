@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5287746320442914945}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 70, y: 70, z: 70}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2886291388910636432
 SpriteRenderer:
@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _headSprite: {fileID: 21300000, guid: ac57c8590c1de46ac93d10c5e3c15843, type: 3}
   _bodySprite: {fileID: 21300000, guid: be07e7b5262d040dfbd361f2b742a9ef, type: 3}
+  headShotText: {fileID: 7616251575187022368, guid: 524a1886332f1c2439122eff2a10f263, type: 3}
+  bodyShotText: {fileID: 8320801051712558200, guid: f969aa110f79b0348a05fd061b667740, type: 3}
 --- !u!61 &7373044495966348788
 BoxCollider2D:
   m_ObjectHideFlags: 0

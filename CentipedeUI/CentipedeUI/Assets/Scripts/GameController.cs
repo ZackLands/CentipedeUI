@@ -1,17 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameController : MonoBehaviour
-{
-    [SerializeField, Header("Canvas Elements")]
-    GameObject mainMenu;
-
+{    
     [SerializeField]
     GameObject gameplay;
-
-    [SerializeField]
-    InputField nameField;
 
     [SerializeField, Header("Objects References")]
     CentipedeManager _centipedeManager;
@@ -24,19 +19,20 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Result resultsScreen;
+    public GameObject results;
 
     [SerializeField]
-    Text score_text;
+    TextMeshProUGUI score_text;
+
+    [SerializeField]
+    TextMeshProUGUI highscore_text;
 
     int score;
 
     void Start()
     {
-        player.SetActive(false);
-        if (PlayerPrefs.HasKey("Name"))
-        {
-            nameField.text = PlayerPrefs.GetString("Name");
-        }
+        _centipedeManager.SpawnCentipedes();
+        SetHighScore();
     }
 
     void OnEnable()
@@ -53,12 +49,11 @@ public class GameController : MonoBehaviour
         GameEvents.NextLevel -= NextLevel;
     }
 
-    public void Play()
+    void SetHighScore()
     {
-        player.SetActive(true);
-        _centipedeManager.SpawnCentipedes();
-        mainMenu.SetActive(false);
-        gameplay.SetActive(true);
+        int lastScore = PlayerPrefs.GetInt("HighScore");
+
+        highscore_text.text = lastScore.ToString(); 
     }
 
     public void NextLevel()
@@ -78,6 +73,7 @@ public class GameController : MonoBehaviour
     {
         gameplay.SetActive(false);
         player.SetActive(false);
+        results.SetActive(true);
         resultsScreen.gameObject.SetActive( true );
         resultsScreen.SetScore(s);
     }
@@ -88,9 +84,8 @@ public class GameController : MonoBehaviour
         score_text.text = score.ToString();
     }
 
-    public void OnRetryPressed()
+    public void Restart()
     {
-        // Don't bother resetting everything carefully, just reload!
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

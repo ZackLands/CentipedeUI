@@ -1,25 +1,46 @@
 ﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class Result : MonoBehaviour
 {
-	public Text resultName;
-	public Text resultScore;
-	public Text lastHighScore;
+	public static Result Instance { get; private set; }
 
-	public void SetScore( int score )
+	public TextMeshProUGUI resultName;
+	public TextMeshProUGUI resultScore;
+	public TextMeshProUGUI lastHighScore;
+
+	[SerializeField] private MainMenu mainMenu;
+
+	private void Awake()
 	{
-		string name = PlayerPrefs.GetString("Name");
-		if (string.IsNullOrEmpty(name))
+		if (Instance != null && Instance != this)
 		{
-			name = "AAA";
+			Destroy(this);
 		}
-		resultName.text = name;
-		resultScore.text = score.ToString();
+		else Instance = this;
+	}
+
+	private void Start()
+    {		
+		SaveData.Instance.Load();
+    }
+
+    private void Update()
+    {
+		mainMenu = FindObjectOfType(typeof(MainMenu)) as MainMenu;
+	}
+
+    public void SetScore( int score )
+	{
+		string name = mainMenu.nameInputText.text;
+		Debug.Log(name);
+		resultName.text = name.ToString();
+		resultScore.text = "Score: " + score.ToString();
 		SetHighScore(score);
 	}
 
-	void SetHighScore(int currentScore)
+	public void SetHighScore(int currentScore)
 	{
 		int lastScore = PlayerPrefs.GetInt("HighScore");
 

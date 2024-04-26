@@ -11,10 +11,11 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Interactables")]
     public GameObject playButton;
+    public GameObject[] mainMenuButtons;
+    public Image loadingBarFill;
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
-    public Toggle fullscreenToggle;
-    public GameObject[] mainMenuButtons;
+    public Toggle fullscreenToggle;        
 
     [Header("Fields")]
     public GameObject nameInputField;
@@ -25,6 +26,8 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject audioSettingsMenu;
     public GameObject displaySettingsMenu;
+    public GameObject loadingScreenMenu;
+    public GameObject mainMenu;
 
     [Header("Mixers")]
     public AudioMixer myMasterMixer;        
@@ -39,6 +42,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {      
+        DontDestroyOnLoad(this);
         SaveData.Instance.Load();        
     }
 
@@ -84,5 +88,33 @@ public class MainMenu : MonoBehaviour
     {
         Screen.fullScreen = toggle;
         SaveData.Instance.Save();
+    }
+
+    public void LoadingScene(int sceneId)
+    {
+        StartCoroutine(LoadSceneAsync(sceneId));
+    }
+
+    IEnumerator LoadSceneAsync(int sceneId)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
+
+        //loadingScreenMenu.SetActive(true);
+        nameInputMenu.SetActive(false);
+        mainMenu.SetActive(false);
+        audioSettingsMenu.SetActive(false);
+        displaySettingsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+
+        while (!operation.isDone)
+        {
+            float progressValue = Mathf.Clamp01(operation.progress / .9f);
+
+            loadingBarFill.fillAmount = progressValue;
+
+            yield return null;            
+        }
     }
 }

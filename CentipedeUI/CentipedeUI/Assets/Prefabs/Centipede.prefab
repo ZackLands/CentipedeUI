@@ -24,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790333471517189062}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -67.2, y: 186.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1544282090604870937
 MonoBehaviour:
@@ -45,12 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 8793823949564112825, guid: 2fb22c5cab5cf409c9d957578aee9a9a, type: 3}
-  body: {fileID: 8232072598158783476, guid: cca84a7d737024f2b87c10dea335ecf6, type: 3}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 64
-  homeArea: {fileID: 0}
-  size: 8
   pointsHead: 50
   pointsBody: 10
-  difficultySpeedMultiplier: 1.1
+  headShotText: {fileID: 7616251575187022368, guid: 524a1886332f1c2439122eff2a10f263, type: 3}
+  bodyShotText: {fileID: 8320801051712558200, guid: f969aa110f79b0348a05fd061b667740, type: 3}
