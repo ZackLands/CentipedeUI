@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -17,6 +18,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("Fields")]
     public GameObject nameInputField;
+    public TMP_InputField nameInputText;
 
     [Header("Menus")]
     public GameObject nameInputMenu;
@@ -37,16 +39,25 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {      
-       SaveData.Instance.Load();        
+        SaveData.Instance.Load();        
     }
 
     public void Play()
     {
         nameInputMenu.SetActive(true);
         playButton.SetActive(false);
+        SaveData.Instance.Save();
+    }    
 
-        //For Controller Compatibility
-        _eventSystem.SetSelectedGameObject(nameInputField);
+    public void CancelNameCreation()
+    {
+        nameInputMenu.SetActive(false);
+        playButton.SetActive(true);
+    }
+
+    public void ConfirmNameCreation()
+    {
+        SaveData.Instance.Save();
     }
 
     public void SetMasterVolume(float sliderValue)
@@ -56,37 +67,22 @@ public class MainMenu : MonoBehaviour
 
     public void SettingsMenu()
     {
-        foreach (GameObject button in mainMenuButtons)
-        {
-            button.SetActive(false);
-        }
-
         settingsMenu.SetActive(true);
     }
 
     public void AudioSettings()
     {
-        settingsMenu.SetActive(false);
         audioSettingsMenu.SetActive(true);
     }
 
     public void DisplaySettings()
     {
-        settingsMenu.SetActive(false);
         displaySettingsMenu.SetActive(true);
-    }
-
-    public void Return()
-    {
-        audioSettingsMenu?.SetActive(false);
-        displaySettingsMenu?.SetActive(false);
-        settingsMenu.SetActive(true);
-        SaveData.Instance.Save();
-    }
+    }    
 
     public void ToggleFullscreen(bool toggle)
     {
         Screen.fullScreen = toggle;
-
+        SaveData.Instance.Save();
     }
 }

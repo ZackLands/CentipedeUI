@@ -15,7 +15,7 @@ public class SaveData : MonoBehaviour
         {
             Destroy(this);
         }
-        else Instance = this;
+        else Instance = this;        
     }
 
     struct gameSettings
@@ -23,11 +23,18 @@ public class SaveData : MonoBehaviour
         public float masterVolume;
         public float musicVolume;
         public bool isFullscreen;
+        public string playerName;
     }
 
     public void Save()
     {
         gameSettings gs = new gameSettings();
+
+        if (gs.playerName == null)
+        {
+            string defaultName = "AAA";
+            gs.playerName = defaultName.ToString();            
+        }
 
         //Volume
         gs.masterVolume = menuManager.masterVolumeSlider.value;
@@ -36,8 +43,8 @@ public class SaveData : MonoBehaviour
         //Display
         gs.isFullscreen = menuManager.fullscreenToggle.isOn;
 
-        //Post-Process
-
+        //Name
+        gs.playerName = menuManager.nameInputText.text;
 
         //Accessability
 
@@ -63,8 +70,7 @@ public class SaveData : MonoBehaviour
         //Display
         menuManager.fullscreenToggle.isOn = gs.isFullscreen;
 
-        //Post-Process
-
+        //Name        
 
         //Accessability
 
