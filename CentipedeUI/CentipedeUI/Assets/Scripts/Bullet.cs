@@ -9,11 +9,23 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rigidBody;
     private bool isResetted;
 
+    public AudioSource audioSource;
+    public AudioClip bulletSFX;    
+
     void OnEnable()
-    {
-        rigidBody = GetComponent<Rigidbody2D>();
-        isResetted = false;
-        StartCoroutine(Expire());
+    {                
+        if (MainMenu.Instance.isPaused)
+        {
+            return;
+        }
+        else
+        {
+            audioSource = GetComponent<AudioSource>();
+            rigidBody = GetComponent<Rigidbody2D>();
+            audioSource.PlayOneShot(bulletSFX);
+            isResetted = false;
+            StartCoroutine(Expire());
+        }        
     }
 
     IEnumerator Expire()

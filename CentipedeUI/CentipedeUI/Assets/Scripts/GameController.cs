@@ -27,12 +27,32 @@ public class GameController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI highscore_text;
 
+    public GameObject[] handObjects;
+
     int score;
 
     void Start()
     {
         _centipedeManager.SpawnCentipedes();
         SetHighScore();
+    }
+
+    private void Update()
+    {
+        if (MainMenu.Instance.isPaused)
+        {
+            foreach (GameObject obj in handObjects)
+            {
+                obj.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject obj in handObjects)
+            {
+                obj.SetActive(false);
+            }
+        }
     }
 
     void OnEnable()
@@ -63,6 +83,8 @@ public class GameController : MonoBehaviour
 
         _centipedeManager.SpawnCentipedes();
     }
+
+    public void LoadMainMenu() => SceneManager.LoadScene(0);
 
     void PlayerTouched()
     {

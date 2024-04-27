@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public static MainMenu Instance { get; private set; }
+
     [Header("Interactables")]
     public GameObject playButton;
     public GameObject[] mainMenuButtons;
@@ -34,8 +36,17 @@ public class MainMenu : MonoBehaviour
     public AudioMixer mySFXMixer;
 
     [Header("Other")]   
-    bool isPaused;
+    public bool isPaused;
     
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else Instance = this;
+    }    
+
     private void Start()
     {      
         DontDestroyOnLoad(this);
@@ -62,6 +73,11 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && y == 1)
         {
             Pause();
+        }
+
+        if (y == 1)
+        {
+            loadingScreenMenu.SetActive(false);
         }
     }
 
@@ -97,35 +113,17 @@ public class MainMenu : MonoBehaviour
         playButton.SetActive(true);
     }
 
-    public void ConfirmNameCreation()
-    {
-        SaveData.Instance.Save();
-    }
+    public void ConfirmNameCreation() => SaveData.Instance.Save();    
 
-    public void SetMusicVolume(float sliderValue)
-    {        
-        myMusicMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);        
-    }
+    public void SetMusicVolume(float sliderValue) => myMusicMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);           
 
-    public void SetSFXVolume(float sliderValue)
-    {
-        mySFXMixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
-    }
+    public void SetSFXVolume(float sliderValue) => mySFXMixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
 
-    public void SettingsMenu()
-    {
-        settingsMenu.SetActive(true);
-    }
+    public void SettingsMenu() => settingsMenu.SetActive(true);
 
-    public void AudioSettings()
-    {
-        audioSettingsMenu.SetActive(true);
-    }
+    public void AudioSettings() => audioSettingsMenu.SetActive(true);    
 
-    public void DisplaySettings()
-    {
-        displaySettingsMenu.SetActive(true);
-    }    
+    public void DisplaySettings() => displaySettingsMenu.SetActive(true);        
 
     public void ToggleFullscreen(bool toggle)
     {
@@ -142,22 +140,22 @@ public class MainMenu : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneId);
 
-        //loadingScreenMenu.SetActive(true);
+        loadingScreenMenu.SetActive(true);
         nameInputMenu.SetActive(false);
         mainMenu.SetActive(false);
         audioSettingsMenu.SetActive(false);
         displaySettingsMenu.SetActive(false);
-        settingsMenu.SetActive(false);
-
-        yield return new WaitForSeconds(3f);
+        settingsMenu.SetActive(false);        
 
         while (!operation.isDone)
         {
             float progressValue = Mathf.Clamp01(operation.progress / .9f);
 
-            loadingBarFill.fillAmount = progressValue;
+            //Debug.Log("Current Progress Value: " + progressValue);
+
+            loadingBarFill.fillAmount = progressValue;            
 
             yield return null;            
-        }
+        }        
     }
 }
