@@ -6,7 +6,7 @@ AudioMixerController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Master
+  m_Name: SFX
   m_OutputGroup: {fileID: 0}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
@@ -17,7 +17,7 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 595eacf284dccff4895cd419441205ef
-    name: MasterVolume
+    name: SFXVolume
   m_AudioMixerGroupViews:
   - guids:
     - 37da45808b7b91c4893bc08ab644b1cc

@@ -23,8 +23,8 @@ public class SaveData : MonoBehaviour
 
     public struct gameSettings
     {
-        public float masterVolume;
         public float musicVolume;
+        public float SFXVolume;
         public bool isFullscreen;
         public string playerName;
     }
@@ -40,8 +40,8 @@ public class SaveData : MonoBehaviour
         }
 
         //Volume
-        gs.masterVolume = menuManager.masterVolumeSlider.value;
         gs.musicVolume = menuManager.musicVolumeSlider.value;
+        gs.SFXVolume = menuManager.SFXVolumeSlider.value;
 
         //Display
         gs.isFullscreen = menuManager.fullscreenToggle.isOn;
@@ -67,8 +67,8 @@ public class SaveData : MonoBehaviour
         gameSettings gs = JsonUtility.FromJson<gameSettings>(m_Value);
 
         //Volume
-        menuManager.masterVolumeSlider.value = gs.masterVolume;
         menuManager.musicVolumeSlider.value = gs.musicVolume;
+        menuManager.SFXVolumeSlider.value = gs.SFXVolume;
 
         //Display
         menuManager.fullscreenToggle.isOn = gs.isFullscreen;

@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     public GameObject playButton;
     public GameObject[] mainMenuButtons;
     public Image loadingBarFill;
-    public Slider masterVolumeSlider;
+    public Slider SFXVolumeSlider;
     public Slider musicVolumeSlider;
     public Toggle fullscreenToggle;        
 
@@ -30,20 +30,58 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
 
     [Header("Mixers")]
-    public AudioMixer myMasterMixer;        
+    public AudioMixer myMusicMixer;
+    public AudioMixer mySFXMixer;
 
-    [Header("Other")]
-    private EventSystem _eventSystem;
-
-    private void Awake()
-    {
-        _eventSystem = EventSystem.current;
-    }
-
+    [Header("Other")]   
+    bool isPaused;
+    
     private void Start()
     {      
         DontDestroyOnLoad(this);
-        SaveData.Instance.Load();        
+
+        string filePath = Application.persistentDataPath + "/Centipede_Settings.json";
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            Debug.Log("Creating New Save File");
+            SaveData.Instance.Save();
+            SaveData.Instance.Load();
+        }
+        else if (System.IO.File.Exists(filePath))
+        {
+            Debug.Log("Loading Existing Save File");
+            SaveData.Instance.Load();
+        }
+    }
+
+    private void Update()
+    {
+        int y = SceneManager.GetActiveScene().buildIndex;
+
+        if (Input.GetKeyDown(KeyCode.Escape) && y == 1)
+        {
+            Pause();
+        }
+    }
+
+    public void Pause()
+    {        
+        if (!isPaused)
+        {
+            isPaused = true;
+            Time.timeScale = 0;
+            settingsMenu.SetActive(true);
+        }
+        else
+        {
+            settingsMenu.SetActive(false);
+            displaySettingsMenu.SetActive(false);
+            audioSettingsMenu.SetActive(false);
+            SaveData.Instance.Save();
+            Time.timeScale = 1;
+            isPaused = false;
+        }        
     }
 
     public void Play()
@@ -64,9 +102,14 @@ public class MainMenu : MonoBehaviour
         SaveData.Instance.Save();
     }
 
-    public void SetMasterVolume(float sliderValue)
+    public void SetMusicVolume(float sliderValue)
     {        
-        myMasterMixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);        
+        myMusicMixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);        
+    }
+
+    public void SetSFXVolume(float sliderValue)
+    {
+        mySFXMixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
     }
 
     public void SettingsMenu()
