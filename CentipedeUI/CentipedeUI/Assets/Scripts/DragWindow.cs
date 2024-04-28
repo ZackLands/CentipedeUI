@@ -18,7 +18,7 @@ public class DragWindow : MonoBehaviour, IDragHandler, IPointerDownHandler
             if (MainMenu.Instance.isPaused)
             {
                 dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-            }     
+            }            
         }
         else
         {

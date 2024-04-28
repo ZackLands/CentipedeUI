@@ -105,9 +105,7 @@ public class Centipede : MonoBehaviour
         if (segment.Behind != null)
         {
             segment.Behind.Ahead = null;
-            /*Debug.Log("bodyshot");
-            GameObject bodyShot = Instantiate(bodyShotText, gameObject.transform.position, Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), 0)));
-            Destroy(bodyShot, 1f);*/
+            Debug.Log("bodyshot");            
             segment.Behind.UpdateHeadSegment();
         }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    const float _moveSpeed = 4f;
+    const float _moveSpeed = 2f;
     const float _screenMargin = 0.02f;
 
     Collider2D _collider;

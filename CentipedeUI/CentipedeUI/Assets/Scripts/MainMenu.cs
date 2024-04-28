@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviour
     [Header("Fields")]
     public GameObject nameInputField;
     public TMP_InputField nameInputText;
+    public TextMeshProUGUI hintText;
 
     [Header("Menus")]
     public GameObject nameInputMenu;
@@ -64,6 +65,10 @@ public class MainMenu : MonoBehaviour
             Debug.Log("Loading Existing Save File");
             SaveData.Instance.Load();
         }
+
+        string wordToDisplay = Hint();
+
+        hintText.text = wordToDisplay;
     }
 
     private void Update()
@@ -157,5 +162,14 @@ public class MainMenu : MonoBehaviour
 
             yield return null;            
         }        
+    }
+
+    public string[] hints = { "Hint: Aim for the head!", "Hint: You can edit your HUD in the pause menu!", "Hint: Body shots split Centipedes!" };    
+
+    public string Hint()
+    {
+        string hint = hints[Random.Range(0, hints.Length)];
+
+        return hint;
     }
 }
